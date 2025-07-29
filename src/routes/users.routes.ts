@@ -21,6 +21,7 @@ const userLoginSchema = zod.object({
 
 // user registration validation middleware
 const registerUserValidation = (req,res,next)=>{
+    const data = userRegistrationSchema.safeParse(req.body);
     const {error} = userRegistrationSchema.safeParse(req.body);
     if(error){
         return res.status(400).json({error: error.message});
@@ -37,7 +38,6 @@ const loginUserValidation = (req,res,next)=>{
     }
     next();
 }
-
 
 router.post('/register',registerUserValidation,registerUser);
 router.post('/login',loginUserValidation,loginUser);
